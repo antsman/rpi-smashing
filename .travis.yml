@@ -1,0 +1,13 @@
+sudo: required
+
+services:
+  - docker
+
+script:
+  # prepare qemu
+  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
+  # build image
+  - docker build -t antsman/rpi-smashing .
+  # test image
+  - docker run antsman/rpi-smashing smashing
+  
