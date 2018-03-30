@@ -8,7 +8,7 @@ pipeline {
         }
         stage('test') {
             steps {
-                sh 'docker run antsman/rpi-smashing smashing_test'
+                sh 'docker run antsman/rpi-smashing smashing'
             }
         }
     }
