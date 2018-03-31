@@ -1,14 +1,15 @@
-node {
-    checkout scm
-
-    def customImage = docker.build("antsman/rpi-smashing:${env.BUILD_ID}")
-
-    docker.image("antsman/rpi-smashing:${env.BUILD_ID}").inside {
-/*
-    customImage.inside {
-*/
-        sh 'ls -l'
-        sh 'smashing'
-        sh 'wget --spider http://localhost:3030'
+pipeline {
+    agent any
+    stages {
+        stage('build') {
+            steps {
+                sh 'docker build -t antsman/rpi-smashing:${env.BUILD_ID} .'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'docker run antsman/rpi-smashing:${env.BUILD_ID} smashing'
+            }
+        }
     }
 }
