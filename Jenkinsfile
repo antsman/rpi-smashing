@@ -1,14 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'docker build -t antsman/rpi-smashing:${env.BUILD_ID} .'
+                sh "docker build -t antsman/rpi-smashing:${env.BUILD_ID} ."
             }
         }
-        stage('test') {
+        stage('Test') {
             steps {
-                sh 'docker run antsman/rpi-smashing:${env.BUILD_ID} smashing'
+                sh "docker run antsman/rpi-smashing:${env.BUILD_ID} smashing"
             }
         }
     }
