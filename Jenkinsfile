@@ -1,11 +1,10 @@
-pipeline {
-    agent { dockerfile true }
-    stages {
-        stage('Test') {
-            steps {
-                sh 'smashing'
-                sh 'wget --spider http://localhost:3030'
-            }
-        }
+node {
+    checkout scm
+
+    def customImage = docker.build("antsman/rpi-smashing:${env.BUILD_ID}")
+
+    customImage.inside {
+        sh 'smashing'
+        sh 'wget --spider http://localhost:3030'
     }
 }
