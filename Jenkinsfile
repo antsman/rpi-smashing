@@ -1,15 +1,9 @@
 pipeline {
-    agent any
+    agent { dockerfile true }
     stages {
-        stage('build') {
+        stage('Test') {
             steps {
-                sh 'docker build -t antsman/rpi-smashing .'
-            }
-        }
-        stage('test') {
-            agent { docker { image 'antsman/rpi-smashing' } }
-            steps {
-                sh 'ls -la'
+                sh 'smashing'
                 sh 'wget --spider http://localhost:3030'
             }
         }
