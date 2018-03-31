@@ -7,8 +7,10 @@ pipeline {
             }
         }
         stage('test') {
+            agent { docker { image 'antsman/rpi-smashing' } }
             steps {
-                sh 'docker run antsman/rpi-smashing smashing'
+                sh 'smashing'
+                sh 'wget --spider http://localhost:3030'
             }
         }
     }
