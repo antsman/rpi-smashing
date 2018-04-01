@@ -13,7 +13,7 @@ pipeline {
         }
         stage('TEST') {
             steps {
-                sh "docker run $IMAGE_NAME:$IMAGE_TAG sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
+                sh "docker run --rm $IMAGE_NAME:$IMAGE_TAG sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
             }
         }
     }
