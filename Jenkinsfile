@@ -22,9 +22,9 @@ pipeline {
             echo 'Build succeeded, push image ..'
             sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
             sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME"
-            sh "docker login -u $DOCKER_HUB_CREDS_USR -p $DOCKER_HUB_CREDS_PSW"
-            sh 'docker push antsman/rpi-smashing:latest'
-            sh 'docker push antsman/rpi-smashing'
+            sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
+            sh "docker push $IMAGE_NAME:latest"
+            sh "docker push $IMAGE_NAME"
         }
     }
 }
