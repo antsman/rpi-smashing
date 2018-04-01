@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_CREDS = credentials('DOCKER_HUB_CREDS')
         IMAGE_NAME = 'antsman/rpi-smashing'
-        IMAGE_TAG = 'build-test'
+        IMAGE_TAG = 'jenkins-build'
     }
     stages {
         stage('BUILD') {
@@ -21,7 +21,6 @@ pipeline {
         success {
             echo 'Build succeeded, push image ..'
             sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
-            sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
             sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
             sh "docker push $IMAGE_NAME:latest"
         }
