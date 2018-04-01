@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh "docker run antsman/rpi-smashing:${env.BUILD_ID} sh -c 'smashing && wget --spider http://localhost:3030'"
+                sh "docker run antsman/rpi-smashing:${env.BUILD_ID} sh -c 'smashing-start && wget --spider http://localhost:3030'"
             }
         }
     }
