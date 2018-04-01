@@ -8,6 +8,7 @@ pipeline {
         }
         stage('Test') {
             steps {
+                sh 'printenv'
                 sh "docker run antsman/rpi-smashing:${env.BUILD_ID} sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
             }
         }
@@ -18,6 +19,8 @@ pipeline {
             sh "docker tag antsman/rpi-smashing:${env.BUILD_ID} antsman/rpi-smashing:latest"
             sh "docker tag antsman/rpi-smashing:${env.BUILD_ID} antsman/rpi-smashing"
             sh "docker login -u $DOCKER_USER -p $DOCKER_PASS"
+            sh 'docker push antsman/rpi-smashing:latest'
+            sh 'docker push antsman/rpi-smashing'
         }
     }
 }
