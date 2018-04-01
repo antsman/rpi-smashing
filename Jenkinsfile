@@ -1,31 +1,30 @@
 pipeline {
     agent any
     environment {
-        DOCKER_USER = "testuser"
-        DOCKER_PASS = "testpass"
-        IMAGE = "antsman/rpi-smashing"
-        TAG = "test-build"
+        DOCKER_HUB_CREDS = credentials('DOCKER_HUB_CREDS')
+        IMAGE_NAME = 'antsman/rpi-smashing'
+        IMAGE_TAG = 'test-build'
     }
     stages {
         stage('Build') {
             steps {
-                sh "docker build -t antsman/rpi-smashing:test-build ."
+                sh "docker build -t $IMAGE_NAME:$IMAGE_TAG ."
             }
         }
         stage('Test') {
             steps {
                 sh 'printenv'
-                sh "docker run antsman/rpi-smashing:test-build sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
+                sh "docker run $IMAGE_NAME:$IMAGE_TAG sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
             }
         }
     }
     post {
         success {
             echo 'Build succeeded, push image ..'
-            sh "docker tag antsman/rpi-smashing:test-build antsman/rpi-smashing:latest"
-            sh "docker tag antsman/rpi-smashing:test-build antsman/rpi-smashing"
+            sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
+            sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME"
+            sh "docker login -u $DOCKER_HUB_CREDS_USR -p $DOCKER_HUB_CREDS_PSW"
 /*
-            sh "docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}"
             sh 'docker push antsman/rpi-smashing:latest'
             sh 'docker push antsman/rpi-smashing'
 */
