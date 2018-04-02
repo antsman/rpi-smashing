@@ -16,13 +16,16 @@ pipeline {
                 sh "docker run --rm $IMAGE_NAME:$IMAGE_TAG sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
             }
         }
-    }
-    post {
-        success {
-            echo 'Build succeeded, push image ..'
-            sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
-            sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
-            sh "docker push $IMAGE_NAME:latest"
+        stage('DEPLOY') {
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Build succeeded, push image ..'
+                sh "docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest"
+                sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
+                sh "docker push $IMAGE_NAME:latest"
+            }
         }
     }
 }

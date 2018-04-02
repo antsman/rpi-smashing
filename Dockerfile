@@ -56,5 +56,3 @@ WORKDIR $DATA
 USER $USER
 
 CMD ["smashing-start"]
-
-# CMD ["/bin/sh"]
