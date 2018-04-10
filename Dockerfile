@@ -55,4 +55,5 @@ WORKDIR $DATA
 
 USER $USER
 
-CMD ["smashing-start"]
+ENTRYPOINT ["smashing-start"]
+# CMD ["smashing-start"]

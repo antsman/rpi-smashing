@@ -4,4 +4,4 @@
 test -f ~/.bundle_done || (bundle && touch ~/.bundle_done)
 
 # regular startup
-smashing start
+exec smashing start
