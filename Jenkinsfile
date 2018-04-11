@@ -15,7 +15,9 @@ pipeline {
         }
         stage('TEST') {
             steps {
-                sh "docker run --rm $IMAGE_NAME:$IMAGE_TAG sh -c 'smashing-start & sleep 60 && ps && wget --spider http://localhost:3030'"
+                timeout(time: 5, unit: 'MINUTES') {
+	            sh "docker run --rm $IMAGE_NAME:$IMAGE_TAG sh -c 'sleep 60 && ps && wget --spider http://localhost:3030'"
+                }
             }
         }
         stage('DEPLOY') {
