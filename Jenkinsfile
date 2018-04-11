@@ -18,7 +18,7 @@ pipeline {
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
 	            sh "docker run -d --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-	            sh "docker exec -ti $CONTAINER_NAME wget --spider http://localhost:3030"
+	            sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:3030"
 	            sh "time docker stop $CONTAINER_NAME"
                 }
             }
