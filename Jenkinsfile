@@ -35,4 +35,9 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+	    sh "docker rmi -f $CONTAINER_NAME"
+        }
+    }
 }
