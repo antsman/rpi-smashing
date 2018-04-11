@@ -6,6 +6,7 @@ pipeline {
         DOCKER_CREDS = credentials('DOCKER_HUB_CREDS')
         IMAGE_NAME = 'antsman/rpi-smashing'
         IMAGE_TAG = 'jenkins-build'
+        CONTAINER_NAME = 'rpi-smashing-dev'
     }
     stages {
         stage('BUILD') {
@@ -16,7 +17,9 @@ pipeline {
         stage('TEST') {
             steps {
                 timeout(time: 10, unit: 'MINUTES') {
-	            sh "docker run --rm $IMAGE_NAME:$IMAGE_TAG wget --spider http://localhost:3030"
+	            sh "docker run --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
+	            sh "docker exec -ti $CONTAINER_NAME wget --spider http://localhost:3030"
+	            sh "time docker stop $CONTAINER_NAME"
                 }
             }
         }
