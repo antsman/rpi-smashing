@@ -5,7 +5,7 @@ pipeline {
     environment {
         DOCKER_CREDS = credentials('DOCKER_HUB_CREDS')
         IMAGE_NAME = 'antsman/rpi-smashing'
-        IMAGE_TAG = "jenkins-$BRANCH_NAME"
+        IMAGE_TAG = "ci-build-$BRANCH_NAME"
         CONTAINER_NAME = "$BUILD_TAG"
     }
     stages {
