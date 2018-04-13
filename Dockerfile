@@ -56,4 +56,3 @@ WORKDIR $DATA
 USER $USER
 
 ENTRYPOINT [ "/entrypoint.sh" ]
-# CMD ["smashing-start"]
