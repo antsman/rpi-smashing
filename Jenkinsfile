@@ -17,12 +17,10 @@ pipeline {
         stage('TEST') {
             steps {
                 timeout(time: 5, unit: 'MINUTES') {
-	            sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
-//                  sh 'env'
+                    sh "docker run -d --rm --name $CONTAINER_NAME $IMAGE_NAME:$IMAGE_TAG"
                     sleep 60
                     sh "docker exec -t $CONTAINER_NAME wget --spider http://localhost:3030"
-//                  sh "docker logs $CONTAINER_NAME"
-	            sh "time docker stop $CONTAINER_NAME"
+      	            sh "time docker stop $CONTAINER_NAME"
                 }
             }
         }
@@ -40,7 +38,7 @@ pipeline {
     }
     post {
         failure {
-	    sh "docker rm -f $CONTAINER_NAME"
+            sh "docker rm -f $CONTAINER_NAME"
         }
     }
 }

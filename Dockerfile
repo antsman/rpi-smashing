@@ -46,7 +46,7 @@ gem \'tzinfo-data\'\n\
     find /usr -type d -name test -exec rm -rf {} +
 
 # Smashing startup file, bundle on first start
-COPY smashing-start $BUNDLE_BIN
+COPY entrypoint.sh /
 
 # Smashing service port
 EXPOSE 3030
@@ -55,5 +55,5 @@ WORKDIR $DATA
 
 USER $USER
 
-ENTRYPOINT ["smashing-start"]
+ENTRYPOINT [ "/entrypoint.sh" ]
 # CMD ["smashing-start"]
