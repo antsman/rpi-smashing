@@ -56,3 +56,4 @@ WORKDIR $DATA
 USER $USER
 
 ENTRYPOINT [ "/entrypoint.sh" ]
+
